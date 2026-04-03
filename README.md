@@ -65,7 +65,7 @@ Visuals:
 
 Bottom tabs:
 
-- Tracker
+- Home
 - Statistics
 
 ---
@@ -87,34 +87,6 @@ Bottom tabs:
 
 ---
 
-### 🎨 Colors
-
-#### Primary
-
-- Deep Green → `#1F3D36`
-- Soft Emerald → `#2E7D6B`
-
-#### Secondary
-
-- Warm Beige → `#F5F3EF`
-- Muted Sand → `#E8E3D9`
-
-#### Neutral
-
-- Dark Text → `#1A1A1A`
-- Light Text → `#FFFFFF`
-- Grey → `#8A8A8A`
-- Dark - `#1A1A1A`
-- Light - `#FFFFFF`
-
-#### Status Colors
-
-- On Time → `#4CAF50`
-- Qaza → `#FF9800`
-- Missed → `#F44336`
-
----
-
 ### 🔤 Typography
 
 - Font: **DM Sans**
@@ -128,23 +100,6 @@ Bottom tabs:
 - Rounded cards (12–16px)
 - Soft animations
 - No bright/neon colors
-
----
-
-## 🧠 App Logic
-
-### Data Structure
-
-Each record:
-
-- `date`
-- `prayerName`
-- `status`
-
-Constraints:
-
-- One record per prayer per day
-- Updatable entries
 
 ---
 
