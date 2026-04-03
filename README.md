@@ -112,7 +112,6 @@ Bottom tabs:
 - On Time → `#4CAF50`
 - Qaza → `#FF9800`
 - Missed → `#F44336`
-- Mosque → `#3F51B5`
 
 ---
 
@@ -167,63 +166,62 @@ Constraints:
 
 ---
 
-## ⚙️ Tech Stack (React Native)
+## ⚙️ Tech Stack
 
 ### 📱 Frontend
 
-- React Native
-- Expo (recommended for faster development)
+- Flutter
 
-## Backend
+---
+
+### 🗄️ Backend
 
 - Supabase
 
 ---
 
-### 🧭 Navigation
+### 🧩 Core Technologies
 
-- React Navigation (Bottom Tabs)
-
----
-
-### 🎨 UI Components
-
-- React Native Paper (Material Design)
+- Dart → main language for Flutter app
+- Flutter SDK → build UI and app structure
+- Material 3 → modern UI components & theming
 
 ---
 
 ### 🧠 State Management
 
-- Redux Toolkit (if scaling later)
+- Riverpod → scalable and clean state management
 
 ---
 
-### 💾 Local Database (Offline First)
+### 💾 Local Storage (Offline First)
 
-- SQLite
+- sqflite → structured local database (like Room)
+- Hive → fast lightweight storage (optional/simple use)
+
+---
 
 ### 📊 Charts & Visualization
 
-- react-native-chart-kit
+- fl_chart → pie charts, graphs, statistics UI
 
 ---
 
-### 📅 Date Handling
+### 📅 Date & Time
 
-- dayjs (lightweight)
+- intl → date formatting and localization
 
 ---
 
 ### 🔔 Notifications
 
-- expo-notifications
+- flutter_local_notifications → prayer reminders
 
 ---
 
-### 🎨 Theming
+### 🧭 Navigation
 
-- React Native Paper Theme System
-- Custom color palette integration
+- go_router → app routing and navigation
 
 ---
 

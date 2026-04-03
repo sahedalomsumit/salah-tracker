@@ -39,3 +39,38 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+
+# Flutter/Dart
+build/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub/
+.pub-cache/
+*.lock
+
+# Android
+*.iml
+*.class
+.gradle/
+local.properties
+*.apk
+*.aab
+
+# iOS
+Pods/
+*.xcworkspace
+*.xcuserstate
+*.framework
+
+# Large files
+*.dill
+*.so
+*.dylib
+*.exe
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
