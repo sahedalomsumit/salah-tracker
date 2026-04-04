@@ -7,12 +7,17 @@ class AuthService {
 
   final SupabaseClient _supabase = Supabase.instance.client;
 
-  // Uses singleton instance instead of constructor in 7.x+
+  // Standard way in 7.x+
   final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
 
   /// Initiate Google Sign-In flow
   Future<AuthResponse> signInWithIdToken() async {
     try {
+      // In 7.x+, configuration is passed via initialize() on the singleton instance
+      await _googleSignIn.initialize(
+        serverClientId:
+            '766340410258-q79skk39410b42vum4e8lflvdobl0iig.apps.googleusercontent.com',
+      );
       // Replaced signIn() with authenticate() in 7.x
       final googleUser = await _googleSignIn.authenticate();
       // In 7.x, authenticate() might throw or return a non-null account if successful.

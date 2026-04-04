@@ -18,7 +18,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     setState(() => _isLoading = true);
     try {
       await AuthService.instance.signInWithIdToken();
-      
+
       final user = AuthService.instance.currentUser;
       if (user != null) {
         final repo = PrayerRepository(user.id);
@@ -41,7 +41,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -49,7 +49,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         elevation: 0,
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
-          icon: const Icon(Icons.arrow_back_rounded, color: AppColors.lightText),
+          icon:
+              const Icon(Icons.arrow_back_rounded, color: AppColors.lightText),
         ),
       ),
       body: Container(
@@ -105,7 +106,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               ),
             ),
             const SizedBox(height: 64),
-            
+
             // Login Button
             SizedBox(
               width: 280,
@@ -119,11 +120,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     borderRadius: BorderRadius.circular(16),
                   ),
                 ),
-                child: _isLoading 
+                child: _isLoading
                     ? const SizedBox(
                         width: 24,
                         height: 24,
-                        child: CircularProgressIndicator(strokeWidth: 2, color: Color(0xFF0F172A)),
+                        child: CircularProgressIndicator(
+                            strokeWidth: 2, color: Color(0xFF0F172A)),
                       )
                     : const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -132,7 +134,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           SizedBox(width: 12),
                           Text(
                             'Continue with Google',
-                            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
+                            style: TextStyle(
+                                fontWeight: FontWeight.w700, fontSize: 16),
                           ),
                         ],
                       ),
