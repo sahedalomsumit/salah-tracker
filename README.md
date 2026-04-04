@@ -1,7 +1,8 @@
 # 🕌 Salah Tracker
 
-A modern mobile app built with **React Native** to help users stay consistent
-with their daily Salah and track their progress with clean, minimal visuals.
+Salah Tracker is an Android app designed to help Muslims stay consistent with
+their daily prayers. It allows users to easily log each Salah and track their
+performance over time.
 
 ---
 
