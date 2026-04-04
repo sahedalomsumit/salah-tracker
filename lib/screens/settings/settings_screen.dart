@@ -192,6 +192,19 @@ class SettingsScreen extends ConsumerWidget {
               surfaceColor: surfaceIcon,
               onTap: () => context.push('/login'),
             ),
+          const SizedBox(height: 48),
+          Center(
+            child: Text(
+              '© ${DateTime.now().year} Sahed Alom Sumit // Built with good vibes and clean code',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: AppColors.grey.withValues(alpha: 0.5),
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+          const SizedBox(height: 24),
         ],
       ),
     );
