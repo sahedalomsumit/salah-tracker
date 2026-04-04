@@ -5,129 +5,128 @@ import '../constants/app_constants.dart';
 class AppTheme {
   AppTheme._();
 
-  static ThemeData get dark {
+  // ── Dark Theme ────────────────────────────────────────────────────────────
+
+  static ThemeData get dark => _build(
+        brightness: Brightness.dark,
+        scaffoldBg: AppColors.darkBackground,
+        surfaceColor: AppColors.surface1Dark,
+        surfaceTint: AppColors.surface2Dark,
+        onSurface: AppColors.lightText,
+        cardColor: AppColors.surface1Dark,
+        subText: AppColors.grey,
+        dividerColor: AppColors.surface3Dark,
+        navBg: AppColors.surface1Dark,
+      );
+
+  // ── Light Theme ───────────────────────────────────────────────────────────
+
+  static ThemeData get light => _build(
+        brightness: Brightness.light,
+        scaffoldBg: AppColors.lightBackground,
+        surfaceColor: AppColors.surface1Light,
+        surfaceTint: AppColors.surface2Light,
+        onSurface: AppColors.darkText,
+        cardColor: AppColors.surface1Light,
+        subText: const Color(0xFF546E65),
+        dividerColor: AppColors.surface3Light,
+        navBg: AppColors.surface1Light,
+      );
+
+  // ── Shared builder ────────────────────────────────────────────────────────
+
+  static ThemeData _build({
+    required Brightness brightness,
+    required Color scaffoldBg,
+    required Color surfaceColor,
+    required Color surfaceTint,
+    required Color onSurface,
+    required Color cardColor,
+    required Color subText,
+    required Color dividerColor,
+    required Color navBg,
+  }) {
+    final isDark = brightness == Brightness.dark;
+
     final base = ThemeData(
       useMaterial3: true,
-      brightness: Brightness.dark,
+      brightness: brightness,
       colorScheme: ColorScheme.fromSeed(
         seedColor: AppColors.softEmerald,
-        brightness: Brightness.dark,
+        brightness: brightness,
         primary: AppColors.softEmerald,
         onPrimary: AppColors.lightText,
         secondary: AppColors.deepGreen,
         onSecondary: AppColors.lightText,
-        surface: AppColors.surface1,
-        onSurface: AppColors.lightText,
+        surface: surfaceColor,
+        onSurface: onSurface,
         error: AppColors.missed,
       ),
     );
 
     final textTheme = GoogleFonts.dmSansTextTheme(base.textTheme).copyWith(
       displayLarge: GoogleFonts.dmSans(
-        fontSize: 32,
-        fontWeight: FontWeight.w700,
-        color: AppColors.lightText,
-      ),
+          fontSize: 32, fontWeight: FontWeight.w700, color: onSurface),
       displayMedium: GoogleFonts.dmSans(
-        fontSize: 28,
-        fontWeight: FontWeight.w700,
-        color: AppColors.lightText,
-      ),
+          fontSize: 28, fontWeight: FontWeight.w700, color: onSurface),
       headlineLarge: GoogleFonts.dmSans(
-        fontSize: 24,
-        fontWeight: FontWeight.w700,
-        color: AppColors.lightText,
-      ),
+          fontSize: 24, fontWeight: FontWeight.w700, color: onSurface),
       headlineMedium: GoogleFonts.dmSans(
-        fontSize: 20,
-        fontWeight: FontWeight.w600,
-        color: AppColors.lightText,
-      ),
+          fontSize: 20, fontWeight: FontWeight.w600, color: onSurface),
       titleLarge: GoogleFonts.dmSans(
-        fontSize: 18,
-        fontWeight: FontWeight.w600,
-        color: AppColors.lightText,
-      ),
+          fontSize: 18, fontWeight: FontWeight.w600, color: onSurface),
       titleMedium: GoogleFonts.dmSans(
-        fontSize: 16,
-        fontWeight: FontWeight.w500,
-        color: AppColors.lightText,
-      ),
+          fontSize: 16, fontWeight: FontWeight.w500, color: onSurface),
       bodyLarge: GoogleFonts.dmSans(
-        fontSize: 16,
-        fontWeight: FontWeight.w400,
-        color: AppColors.lightText,
-      ),
+          fontSize: 16, fontWeight: FontWeight.w400, color: onSurface),
       bodyMedium: GoogleFonts.dmSans(
-        fontSize: 14,
-        fontWeight: FontWeight.w400,
-        color: AppColors.lightText,
-      ),
+          fontSize: 14, fontWeight: FontWeight.w400, color: onSurface),
       bodySmall: GoogleFonts.dmSans(
-        fontSize: 12,
-        fontWeight: FontWeight.w400,
-        color: AppColors.grey,
-      ),
+          fontSize: 12, fontWeight: FontWeight.w400, color: subText),
       labelLarge: GoogleFonts.dmSans(
-        fontSize: 14,
-        fontWeight: FontWeight.w600,
-        color: AppColors.lightText,
-      ),
+          fontSize: 14, fontWeight: FontWeight.w600, color: onSurface),
     );
 
     return base.copyWith(
       textTheme: textTheme,
-      scaffoldBackgroundColor: const Color(0xFF121E1B),
+      scaffoldBackgroundColor: scaffoldBg,
       cardTheme: CardThemeData(
         elevation: 0,
-        color: AppColors.surface1,
+        color: cardColor,
         surfaceTintColor: Colors.transparent,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         margin: EdgeInsets.zero,
       ),
       appBarTheme: AppBarTheme(
-        backgroundColor: const Color(0xFF121E1B),
+        backgroundColor: scaffoldBg,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
         titleTextStyle: GoogleFonts.dmSans(
           fontSize: 18,
           fontWeight: FontWeight.w700,
-          color: AppColors.lightText,
+          color: onSurface,
         ),
-        iconTheme: const IconThemeData(color: AppColors.lightText),
-      ),
-      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-        backgroundColor: AppColors.surface1,
-        selectedItemColor: AppColors.softEmerald,
-        unselectedItemColor: AppColors.grey,
-        elevation: 0,
-        type: BottomNavigationBarType.fixed,
+        iconTheme: IconThemeData(color: onSurface),
       ),
       navigationBarTheme: NavigationBarThemeData(
-        backgroundColor: AppColors.surface1,
-        indicatorColor: AppColors.softEmerald.withValues(alpha: 0.2),
+        backgroundColor: navBg,
+        indicatorColor: AppColors.softEmerald.withValues(alpha: 0.18),
         iconTheme: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.selected)) {
             return const IconThemeData(color: AppColors.softEmerald);
           }
-          return const IconThemeData(color: AppColors.grey);
+          return IconThemeData(color: subText);
         }),
         labelTextStyle: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.selected)) {
             return GoogleFonts.dmSans(
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
-              color: AppColors.softEmerald,
-            );
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+                color: AppColors.softEmerald);
           }
           return GoogleFonts.dmSans(
-            fontSize: 12,
-            fontWeight: FontWeight.w400,
-            color: AppColors.grey,
-          );
+              fontSize: 12, fontWeight: FontWeight.w400, color: subText);
         }),
         elevation: 0,
       ),
@@ -136,39 +135,37 @@ class AppTheme {
           backgroundColor: AppColors.softEmerald,
           foregroundColor: AppColors.lightText,
           elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-          textStyle: GoogleFonts.dmSans(
-            fontSize: 15,
-            fontWeight: FontWeight.w600,
-          ),
+          textStyle:
+              GoogleFonts.dmSans(fontSize: 15, fontWeight: FontWeight.w600),
         ),
       ),
       switchTheme: SwitchThemeData(
         thumbColor: WidgetStateProperty.resolveWith((states) {
-          if (states.contains(WidgetState.selected)) {
-            return AppColors.softEmerald;
-          }
-          return AppColors.grey;
+          return states.contains(WidgetState.selected)
+              ? AppColors.softEmerald
+              : subText;
         }),
         trackColor: WidgetStateProperty.resolveWith((states) {
-          if (states.contains(WidgetState.selected)) {
-            return AppColors.softEmerald.withValues(alpha: 0.3);
-          }
-          return AppColors.grey.withValues(alpha: 0.2);
+          return states.contains(WidgetState.selected)
+              ? AppColors.softEmerald.withValues(alpha: 0.3)
+              : subText.withValues(alpha: 0.2);
         }),
       ),
-      dividerTheme: const DividerThemeData(
-        color: Color(0xFF2A3E38),
-        thickness: 1,
-      ),
+      dividerTheme: DividerThemeData(color: dividerColor, thickness: 1),
       snackBarTheme: SnackBarThemeData(
-        backgroundColor: AppColors.surface3,
-        contentTextStyle: GoogleFonts.dmSans(color: AppColors.lightText),
+        backgroundColor: isDark ? AppColors.surface3Dark : AppColors.surface2Light,
+        contentTextStyle: GoogleFonts.dmSans(color: onSurface),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         behavior: SnackBarBehavior.floating,
+      ),
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        backgroundColor: navBg,
+        selectedItemColor: AppColors.softEmerald,
+        unselectedItemColor: subText,
+        elevation: 0,
+        type: BottomNavigationBarType.fixed,
       ),
     );
   }

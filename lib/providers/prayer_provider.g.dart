@@ -49,7 +49,7 @@ final class PrayerRepositoryProvider extends $FunctionalProvider<
   }
 }
 
-String _$prayerRepositoryHash() => r'b8c1c23da6ec0f02fc0311572c57c4e0f02609cb';
+String _$prayerRepositoryHash() => r'5085dca069d19b7a36f008fd2ffcd33d6501b683';
 
 @ProviderFor(SelectedDate)
 final selectedDateProvider = SelectedDateProvider._();

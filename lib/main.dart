@@ -1,8 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'app.dart';
+import 'providers/theme_provider.dart';
 import 'services/notification_service.dart';
 
 const _supabaseUrl = 'https://xpnsoabfznjlwiwcmrlf.supabase.co';
@@ -12,6 +14,9 @@ const _supabaseAnonKey =
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  // Easy localization
+  await EasyLocalization.ensureInitialized();
+
   // Supabase initialization
   await Supabase.initialize(
     url: _supabaseUrl,
@@ -19,14 +24,37 @@ void main() async {
   );
 
   // Google Sign-In initialization required in 7.x+
-  await GoogleSignIn.instance.initialize();
+  // serverClientId = Web OAuth 2.0 Client ID (required on Android to exchange tokens)
+  await GoogleSignIn.instance.initialize(
+    serverClientId:
+        '766340410258-q79skk39410b42vum4e8lflvdobl0iig.apps.googleusercontent.com',
+  );
 
   // Notification service initialization
   await NotificationService.instance.initialize();
 
   runApp(
-    const ProviderScope(
-      child: SalahTrackerApp(),
+    EasyLocalization(
+      supportedLocales: const [Locale('en'), Locale('bn')],
+      path: 'assets/translations',
+      fallbackLocale: const Locale('en'),
+      child: const ProviderScope(
+        child: _AppWithTheme(),
+      ),
     ),
   );
+}
+
+/// Thin wrapper that reads the persisted theme before first render.
+class _AppWithTheme extends ConsumerWidget {
+  const _AppWithTheme();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    // Hydrate theme from SharedPreferences on first build
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(themeModeProvider.notifier).init();
+    });
+    return const SalahTrackerApp();
+  }
 }

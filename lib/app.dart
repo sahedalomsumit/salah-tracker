@@ -1,12 +1,14 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'core/theme/app_theme.dart';
+import 'providers/auth_provider.dart';
+import 'providers/theme_provider.dart';
 import 'screens/tracker/tracker_screen.dart';
 import 'screens/stats/stats_screen.dart';
 import 'screens/settings/settings_screen.dart';
 import 'screens/auth/login_screen.dart';
-import 'providers/auth_provider.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // ── Router ────────────────────────────────────────────────────────────────────
 
@@ -14,10 +16,10 @@ final _routerProvider = Provider<GoRouter>((ref) {
   final authStatus = ref.watch(isAuthenticatedProvider);
 
   return GoRouter(
-    initialLocation: '/tracker',
+    initialLocation: '/home',
     redirect: (context, state) {
       final isLoggingIn = state.matchedLocation == '/login';
-      if (authStatus && isLoggingIn) return '/tracker';
+      if (authStatus && isLoggingIn) return '/home';
       return null;
     },
     routes: [
@@ -31,7 +33,7 @@ final _routerProvider = Provider<GoRouter>((ref) {
         branches: [
           StatefulShellBranch(routes: [
             GoRoute(
-              path: '/tracker',
+              path: '/home',
               builder: (_, __) => const TrackerScreen(),
             ),
           ]),
@@ -67,22 +69,23 @@ class _ScaffoldWithNavBar extends StatelessWidget {
       bottomNavigationBar: NavigationBar(
         selectedIndex: navigationShell.currentIndex,
         onDestinationSelected: (index) =>
-            navigationShell.goBranch(index, initialLocation: index == navigationShell.currentIndex),
-        destinations: const [
+            navigationShell.goBranch(
+                index, initialLocation: index == navigationShell.currentIndex),
+        destinations: [
           NavigationDestination(
-            icon: Icon(Icons.calendar_today_outlined),
-            selectedIcon: Icon(Icons.calendar_today_rounded),
-            label: 'Tracker',
+            icon: const Icon(Icons.home_outlined),
+            selectedIcon: const Icon(Icons.home_rounded),
+            label: 'nav_home'.tr(),
           ),
           NavigationDestination(
-            icon: Icon(Icons.bar_chart_outlined),
-            selectedIcon: Icon(Icons.bar_chart_rounded),
-            label: 'Statistics',
+            icon: const Icon(Icons.bar_chart_outlined),
+            selectedIcon: const Icon(Icons.bar_chart_rounded),
+            label: 'nav_statistics'.tr(),
           ),
           NavigationDestination(
-            icon: Icon(Icons.settings_outlined),
-            selectedIcon: Icon(Icons.settings_rounded),
-            label: 'Settings',
+            icon: const Icon(Icons.settings_outlined),
+            selectedIcon: const Icon(Icons.settings_rounded),
+            label: 'nav_settings'.tr(),
           ),
         ],
       ),
@@ -98,11 +101,18 @@ class SalahTrackerApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(_routerProvider);
+    final themeMode = ref.watch(themeModeProvider);
+
     return MaterialApp.router(
-      title: 'Salah Tracker',
+      title: 'app_name'.tr(),
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.dark,
+      theme: AppTheme.light,
+      darkTheme: AppTheme.dark,
+      themeMode: themeMode,
       routerConfig: router,
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
     );
   }
 }

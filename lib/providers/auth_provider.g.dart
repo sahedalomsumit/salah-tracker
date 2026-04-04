@@ -40,7 +40,7 @@ final class AuthStateProvider extends $FunctionalProvider<AsyncValue<AuthState>,
   }
 }
 
-String _$authStateHash() => r'73587a9adcda377fc3bcbf8ed4dce0278a8b3e2a';
+String _$authStateHash() => r'a82c1b5cb14ec89c6f296c51bcf4d796af981191';
 
 @ProviderFor(isAuthenticated)
 final isAuthenticatedProvider = IsAuthenticatedProvider._();
@@ -80,7 +80,7 @@ final class IsAuthenticatedProvider
   }
 }
 
-String _$isAuthenticatedHash() => r'57d14b5f67e29cb8ba75051a656e45f56bd581f8';
+String _$isAuthenticatedHash() => r'1f8416eaa82e2534008a69be239a64d1f7173026';
 
 @ProviderFor(sessionUser)
 final sessionUserProvider = SessionUserProvider._();
@@ -120,4 +120,4 @@ final class SessionUserProvider extends $FunctionalProvider<User?, User?, User?>
   }
 }
 
-String _$sessionUserHash() => r'2013131405b04e660b773927a5c7ab058855d81f';
+String _$sessionUserHash() => r'3cab9ae01c3d05a55c200b7fb9f9efc269b8973c';

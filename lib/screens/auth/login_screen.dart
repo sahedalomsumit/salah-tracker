@@ -45,9 +45,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       ),
       body: Container(
         width: double.infinity,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xFF0F172A), AppColors.surface1],
+            colors: [const Color(0xFF0F172A), theme.cardColor],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -60,11 +60,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               width: 100,
               height: 100,
               decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  colors: [AppColors.deepGreen, AppColors.softEmerald],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
                 borderRadius: BorderRadius.circular(24),
                 boxShadow: [
                   BoxShadow(
@@ -74,8 +69,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   ),
                 ],
               ),
-              child: const Icon(Icons.mosque_rounded,
-                  color: AppColors.lightText, size: 50),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(24),
+                child: Image.asset(
+                  'assets/icon/app_icon.png',
+                  width: 100,
+                  height: 100,
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
             const SizedBox(height: 32),
             Text(

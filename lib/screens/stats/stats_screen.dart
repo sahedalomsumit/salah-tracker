@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -14,7 +15,7 @@ class StatsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Statistics'),
+        title: Text('stats_title'.tr()),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh_rounded),
@@ -34,7 +35,7 @@ class StatsScreen extends ConsumerWidget {
         error: (e, _) => Center(child: Text('Error: $e')),
         data: (stats) => RefreshIndicator(
           color: AppColors.softEmerald,
-          backgroundColor: AppColors.surface1,
+          backgroundColor: Theme.of(context).cardColor,
           onRefresh: () => ref.read(statsProvider.notifier).refresh(),
           child: ListView(
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
@@ -48,7 +49,7 @@ class StatsScreen extends ConsumerWidget {
                 children: [
                   Expanded(
                     child: _StatMiniCard(
-                      label: 'Today',
+                      label: 'stats_today'.tr(),
                       percent: stats.todayPercent,
                       color: AppColors.softEmerald,
                     ),
@@ -56,7 +57,7 @@ class StatsScreen extends ConsumerWidget {
                   const SizedBox(width: 12),
                   Expanded(
                     child: _StatMiniCard(
-                      label: 'This Week',
+                      label: 'stats_this_week'.tr(),
                       percent: stats.weeklyPercent,
                       color: const Color(0xFF5C9BD6),
                     ),
@@ -64,7 +65,7 @@ class StatsScreen extends ConsumerWidget {
                   const SizedBox(width: 12),
                   Expanded(
                     child: _StatMiniCard(
-                      label: 'This Month',
+                      label: 'stats_this_month'.tr(),
                       percent: stats.monthlyPercent,
                       color: const Color(0xFFAB7EDB),
                     ),
@@ -127,7 +128,7 @@ class _StreakCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Current Streak',
+                  'stats_current_streak'.tr(),
                   style: theme.textTheme.bodyMedium?.copyWith(
                     color: AppColors.lightText.withValues(alpha: 0.8),
                   ),
@@ -149,7 +150,7 @@ class _StreakCard extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 8),
                       child: Text(
-                        streak == 1 ? 'day' : 'days',
+                        streak == 1 ? 'stats_day'.tr() : 'stats_days'.tr(),
                         style: theme.textTheme.titleMedium?.copyWith(
                           color: AppColors.lightText.withValues(alpha: 0.8),
                         ),
@@ -160,8 +161,8 @@ class _StreakCard extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   streak == 0
-                      ? 'Start logging prayers to build your streak!'
-                      : 'No missed prayers — keep it up! 💪',
+                      ? 'stats_streak_empty'.tr()
+                      : 'stats_streak_active'.tr(),
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: AppColors.lightText.withValues(alpha: 0.7),
                   ),
@@ -208,7 +209,7 @@ class _StatMiniCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.surface1,
+        color: theme.cardColor,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
@@ -256,25 +257,25 @@ class _WeeklyBarChart extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppColors.surface1,
+        color: theme.cardColor,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('7-Day Overview', style: theme.textTheme.titleMedium),
+          Text('stats_7_day_overview'.tr(), style: theme.textTheme.titleMedium),
           const SizedBox(height: 4),
           Text(
-            'Daily completion percentage',
+            'stats_daily_completion'.tr(),
             style: theme.textTheme.bodySmall,
           ),
           const SizedBox(height: 20),
           SizedBox(
             height: 160,
             child: percents.isEmpty
-                ? const Center(
-                    child: Text('No data yet',
-                        style: TextStyle(color: AppColors.grey)))
+                ? Center(
+                    child: Text('stats_no_data'.tr(),
+                        style: const TextStyle(color: AppColors.grey)))
                 : BarChart(
                     BarChartData(
                       maxY: 100,
@@ -336,8 +337,8 @@ class _WeeklyBarChart extends StatelessWidget {
                         show: true,
                         drawVerticalLine: false,
                         horizontalInterval: 50,
-                        getDrawingHorizontalLine: (_) => const FlLine(
-                          color: AppColors.surface3,
+                        getDrawingHorizontalLine: (_) => FlLine(
+                          color: theme.dividerColor,
                           strokeWidth: 1,
                         ),
                       ),
@@ -404,14 +405,15 @@ class _StatusPieChartState extends State<_StatusPieChart> {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppColors.surface1,
+        color: theme.cardColor,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Weekly Distribution', style: theme.textTheme.titleMedium),
-          Text('Prayer status breakdown', style: theme.textTheme.bodySmall),
+          Text('stats_weekly_distribution'.tr(),
+              style: theme.textTheme.titleMedium),
+          Text('stats_prayer_breakdown'.tr(), style: theme.textTheme.bodySmall),
           const SizedBox(height: 20),
           Row(
             children: [
@@ -419,9 +421,9 @@ class _StatusPieChartState extends State<_StatusPieChart> {
                 height: 150,
                 width: 150,
                 child: total == 0
-                    ? const Center(
-                        child: Text('No data',
-                            style: TextStyle(color: AppColors.grey)))
+                    ? Center(
+                        child: Text('stats_no_data_short'.tr(),
+                            style: const TextStyle(color: AppColors.grey)))
                     : PieChart(
                         PieChartData(
                           pieTouchData: PieTouchData(
@@ -443,11 +445,12 @@ class _StatusPieChartState extends State<_StatusPieChart> {
                           sectionsSpace: 3,
                           centerSpaceRadius: 38,
                           sections: [
-                            _pieSection(
-                                onTime, total, AppColors.onTime, 'On Time', 0),
-                            _pieSection(qaza, total, AppColors.qaza, 'Qaza', 1),
-                            _pieSection(
-                                missed, total, AppColors.missed, 'Missed', 2),
+                            _pieSection(onTime, total, AppColors.onTime,
+                                'stats_on_time'.tr(), 0),
+                            _pieSection(qaza, total, AppColors.qaza,
+                                'stats_qaza'.tr(), 1),
+                            _pieSection(missed, total, AppColors.missed,
+                                'stats_missed'.tr(), 2),
                           ],
                         ),
                       ),
@@ -460,15 +463,17 @@ class _StatusPieChartState extends State<_StatusPieChart> {
                   children: [
                     _LegendItem(
                         color: AppColors.onTime,
-                        label: 'On Time',
+                        label: 'stats_on_time'.tr(),
                         count: onTime),
                     const SizedBox(height: 12),
                     _LegendItem(
-                        color: AppColors.qaza, label: 'Qaza', count: qaza),
+                        color: AppColors.qaza,
+                        label: 'stats_qaza'.tr(),
+                        count: qaza),
                     const SizedBox(height: 12),
                     _LegendItem(
                         color: AppColors.missed,
-                        label: 'Missed',
+                        label: 'stats_missed'.tr(),
                         count: missed),
                   ],
                 ),
@@ -549,30 +554,38 @@ class _MonthlySummaryCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppColors.surface1,
+        color: theme.cardColor,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Monthly Summary', style: theme.textTheme.titleMedium),
-          Text('Current calendar month', style: theme.textTheme.bodySmall),
+          Text('stats_monthly_summary'.tr(),
+              style: theme.textTheme.titleMedium),
+          Text('stats_current_month'.tr(), style: theme.textTheme.bodySmall),
           const SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               _MonthStat(
-                  value: onTime, label: 'On Time', color: AppColors.onTime),
-              _MonthStat(value: qaza, label: 'Qaza', color: AppColors.qaza),
+                  value: onTime,
+                  label: 'stats_on_time'.tr(),
+                  color: AppColors.onTime),
               _MonthStat(
-                  value: missed, label: 'Missed', color: AppColors.missed),
+                  value: qaza, label: 'stats_qaza'.tr(), color: AppColors.qaza),
               _MonthStat(
-                  value: total, label: 'Total', color: AppColors.softEmerald),
+                  value: missed,
+                  label: 'stats_missed'.tr(),
+                  color: AppColors.missed),
+              _MonthStat(
+                  value: total,
+                  label: 'stats_total'.tr(),
+                  color: AppColors.softEmerald),
             ],
           ),
           const SizedBox(height: 16),
           Text(
-            'Completion rate',
+            'stats_completion_rate'.tr(),
             style: theme.textTheme.bodySmall,
           ),
           const SizedBox(height: 8),
@@ -588,7 +601,7 @@ class _MonthlySummaryCard extends StatelessWidget {
           ),
           const SizedBox(height: 6),
           Text(
-            '${pct.toStringAsFixed(1)}% prayers on time',
+            '${pct.toStringAsFixed(1)}% ${'stats_prayers_on_time'.tr()}',
             style: theme.textTheme.bodySmall?.copyWith(
               color: AppColors.softEmerald,
               fontWeight: FontWeight.w600,
