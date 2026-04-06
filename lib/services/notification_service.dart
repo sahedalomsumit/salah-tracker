@@ -14,7 +14,7 @@ class NotificationService {
     tz.initializeTimeZones();
     // Set Bangladesh Timezone (UTC +6)
     // Note: 'Asia/Dhaka' is the standard for Bangladesh
-    
+
     const initializationSettings = InitializationSettings(
       android: AndroidInitializationSettings('@mipmap/ic_launcher'),
       iOS: DarwinInitializationSettings(),
@@ -26,10 +26,10 @@ class NotificationService {
         // Handle notification click if needed
       },
     );
-    
+
     // Request permissions on initialization
     await requestPermissions();
-    
+
     // Schedule the daily reminder
     await scheduleDailyReminder();
   }
@@ -39,19 +39,21 @@ class NotificationService {
       final androidImplementation =
           _notifications.resolvePlatformSpecificImplementation<
               AndroidFlutterLocalNotificationsPlugin>();
-      
+
       // Request notifications permission (required for Android 13+)
       await androidImplementation?.requestNotificationsPermission();
-      
+
       // Request exact alarm permission (required for exact scheduling for Android 13+)
       await androidImplementation?.requestExactAlarmsPermission();
     } else if (Platform.isIOS) {
-      await _notifications.resolvePlatformSpecificImplementation<
-          IOSFlutterLocalNotificationsPlugin>()?.requestPermissions(
-        alert: true,
-        badge: true,
-        sound: true,
-      );
+      await _notifications
+          .resolvePlatformSpecificImplementation<
+              IOSFlutterLocalNotificationsPlugin>()
+          ?.requestPermissions(
+            alert: true,
+            badge: true,
+            sound: true,
+          );
     }
   }
 
@@ -59,7 +61,7 @@ class NotificationService {
     // Bangladesh is UTC+6. Using 'Asia/Dhaka' location.
     final dhaka = tz.getLocation('Asia/Dhaka');
     final now = tz.TZDateTime.now(dhaka);
-    
+
     var scheduledDate = tz.TZDateTime(
       dhaka,
       now.year,
@@ -92,23 +94,24 @@ class NotificationService {
     // and uiLocalNotificationDateInterpretation is removed.
     await _notifications.zonedSchedule(
       id: 100,
-      title: 'Salah Tracker',
+      title: 'Salah Tracker App',
       body: 'Don\'t forget to log your prayers for today!',
       scheduledDate: scheduledDate,
       notificationDetails: details,
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
       matchDateTimeComponents: DateTimeComponents.time,
     );
-    
+
     debugPrint('Daily reminder scheduled for: $scheduledDate (BD Time)');
   }
 
-  Future<void> showReminder({required String title, required String body}) async {
+  Future<void> showReminder(
+      {required String title, required String body}) async {
     const details = NotificationDetails(
       android: AndroidNotificationDetails('salah_channel', 'Salah Reminders'),
       iOS: DarwinNotificationDetails(),
     );
-    
+
     await _notifications.show(
       id: 0,
       title: title,

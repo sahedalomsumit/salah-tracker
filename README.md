@@ -1,6 +1,6 @@
-# 🕌 Salah Tracker
+# 🕌 Salah Tracker App
 
-Salah Tracker is an Android app designed to help Muslims stay consistent with
+Salah Tracker App is an Android app designed to help Muslims stay consistent with
 their daily prayers. It allows users to easily log each Salah and track their
 performance over time.
 
@@ -8,7 +8,7 @@ performance over time.
 
 ## 🎯 App Goal
 
-Salah Tracker helps users:
+Salah Tracker App helps users:
 
 - Log their 5 daily prayers
 - Track consistency over time

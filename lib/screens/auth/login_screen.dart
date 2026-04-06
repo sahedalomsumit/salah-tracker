@@ -27,7 +27,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         // Bi-directional sync
         await repo.syncFromRemote();
         await repo.syncToRemote();
-        
+
         // Refresh providers to show newly synced data immediately
         ref.invalidate(dayPrayersProvider);
         ref.invalidate(statsProvider);
@@ -97,7 +97,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             ),
             const SizedBox(height: 32),
             Text(
-              'Salah Tracker',
+              'Salah Tracker App',
               style: theme.textTheme.headlineMedium?.copyWith(
                 fontWeight: FontWeight.w800,
                 color: AppColors.lightText,
