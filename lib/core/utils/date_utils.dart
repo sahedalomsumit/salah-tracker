@@ -89,4 +89,15 @@ class SalahDateUtils {
 
   /// Year label (e.g., 2024)
   static String yearLabel(DateTime date) => DateFormat('yyyy').format(date);
+
+  /// Get correct prayer name (Dhuhr vs Jummah)
+  static String getPrayerDisplayName(String prayerName, String dateKey) {
+    if (prayerName == 'Dhuhr') {
+      final date = fromKey(dateKey);
+      if (date.weekday == DateTime.friday) {
+        return 'Jummah';
+      }
+    }
+    return prayerName;
+  }
 }

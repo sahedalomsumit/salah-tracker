@@ -144,4 +144,24 @@ class SupabaseService {
       debugPrint('[Supabase] deleteRecord failed: $e');
     }
   }
+
+  /// Admin: Update a specific user's prayer record
+  Future<void> adminUpdateStatus({
+    required String userId,
+    required String date,
+    required String prayerName,
+    required PrayerStatus status,
+  }) async {
+    try {
+      await _client.from('prayers').upsert({
+        'user_id': userId,
+        'date': date,
+        'prayer_name': prayerName,
+        'status': status.key,
+        'updated_at': DateTime.now().toIso8601String(),
+      }, onConflict: 'user_id, date, prayer_name');
+    } catch (e) {
+      debugPrint('[Supabase] adminUpdateStatus failed: $e');
+    }
+  }
 }

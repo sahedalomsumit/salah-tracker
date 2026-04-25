@@ -50,7 +50,8 @@ class TrackerScreen extends ConsumerWidget {
                     return GlassPrayerCard(
                       index: i,
                       record: record,
-                      onTap: () => _showStatusSheet(context, ref, record),
+                      date: selectedDate,
+                      onTap: () => _showStatusSheet(context, ref, record, selectedDate),
                     );
                   },
                 ),
@@ -63,7 +64,7 @@ class TrackerScreen extends ConsumerWidget {
   }
 
   void _showStatusSheet(
-      BuildContext context, WidgetRef ref, PrayerRecord record) {
+      BuildContext context, WidgetRef ref, PrayerRecord record, DateTime date) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     showModalBottomSheet(
       context: context,
@@ -72,7 +73,7 @@ class TrackerScreen extends ConsumerWidget {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
-      builder: (_) => _StatusSheet(record: record, ref: ref),
+      builder: (_) => _StatusSheet(record: record, ref: ref, date: date),
     );
   }
 }
@@ -82,12 +83,14 @@ class TrackerScreen extends ConsumerWidget {
 class GlassPrayerCard extends StatelessWidget {
   final int index;
   final PrayerRecord record;
+  final DateTime date;
   final VoidCallback onTap;
 
   const GlassPrayerCard({
     super.key,
     required this.index,
     required this.record,
+    required this.date,
     required this.onTap,
   });
 
@@ -163,14 +166,18 @@ class GlassPrayerCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              kPrayerKeys[index].tr(),
+                              (index == 1 && date.weekday == DateTime.friday)
+                                  ? 'prayer_jummah'.tr()
+                                  : kPrayerKeys[index].tr(),
                               style: theme.textTheme.titleMedium?.copyWith(
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
                             const SizedBox(height: 2),
                             Text(
-                              kPrayerArabic[index],
+                              (index == 1 && date.weekday == DateTime.friday)
+                                  ? kJummahArabic
+                                  : kPrayerArabic[index],
                               style: theme.textTheme.bodySmall?.copyWith(
                                 fontSize: 13,
                               ),
@@ -316,8 +323,9 @@ class _DateHeader extends StatelessWidget {
 class _StatusSheet extends ConsumerWidget {
   final PrayerRecord record;
   final WidgetRef ref;
+  final DateTime date;
 
-  const _StatusSheet({required this.record, required this.ref});
+  const _StatusSheet({required this.record, required this.ref, required this.date});
 
   static const _statuses = [
     PrayerStatus.onTime,
@@ -347,7 +355,9 @@ class _StatusSheet extends ConsumerWidget {
           ),
           const SizedBox(height: 20),
           Text(
-            kPrayerKeys[kPrayerNames.indexOf(record.prayerName)].tr(),
+            (record.prayerName == 'Dhuhr' && date.weekday == DateTime.friday)
+                ? 'prayer_jummah'.tr()
+                : kPrayerKeys[kPrayerNames.indexOf(record.prayerName)].tr(),
             style: theme.textTheme.headlineMedium,
           ),
           Text(

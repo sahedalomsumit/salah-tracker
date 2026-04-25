@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/remote/supabase_service.dart';
 import '../../data/models/prayer_record.dart';
 import '../../core/constants/app_constants.dart';
+import '../../core/utils/date_utils.dart';
 
 class UserDetailScreen extends ConsumerStatefulWidget {
   final String userId;
@@ -37,12 +38,12 @@ class _UserDetailScreenState extends ConsumerState<UserDetailScreen> {
     });
   }
 
-  Future<void> _deleteRecord(PrayerRecord record) async {
+  Future<void> _resetRecord(PrayerRecord record) async {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Confirm Deletion'),
-        content: Text('Are you sure you want to delete the ${record.prayerName} record for ${record.date}?'),
+        title: const Text('Confirm Reset'),
+        content: Text('Are you sure you want to reset the ${SalahDateUtils.getPrayerDisplayName(record.prayerName, record.date)} record for ${record.date} to "Not Logged"?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
@@ -50,18 +51,21 @@ class _UserDetailScreenState extends ConsumerState<UserDetailScreen> {
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
-            style: TextButton.styleFrom(foregroundColor: Colors.red),
-            child: const Text('Delete'),
+            style: TextButton.styleFrom(foregroundColor: Colors.orange),
+            child: const Text('Reset'),
           ),
         ],
       ),
     );
 
     if (confirmed == true) {
-      if (record.id != null) {
-        await SupabaseService.instance.deleteRecord(record.id!);
-        _loadUserRecords();
-      }
+      await SupabaseService.instance.adminUpdateStatus(
+        userId: widget.userId,
+        date: record.date,
+        prayerName: record.prayerName,
+        status: PrayerStatus.none,
+      );
+      _loadUserRecords();
     }
   }
 
@@ -88,12 +92,13 @@ class _UserDetailScreenState extends ConsumerState<UserDetailScreen> {
                   itemBuilder: (context, index) {
                     final record = _records[index];
                     return ListTile(
-                      title: Text('${record.prayerName} - ${record.date}'),
+                      title: Text('${SalahDateUtils.getPrayerDisplayName(record.prayerName, record.date)} - ${record.date}'),
                       subtitle: Text('Status: ${record.status.label}'),
                       leading: Icon(record.status.icon, color: record.status.color),
                       trailing: IconButton(
-                        icon: const Icon(Icons.delete_outline, color: Colors.grey),
-                        onPressed: () => _deleteRecord(record),
+                        icon: const Icon(Icons.history_rounded, color: Colors.grey),
+                        onPressed: () => _resetRecord(record),
+                        tooltip: 'Reset to default',
                       ),
                     );
                   },

@@ -34,19 +34,22 @@ class NotificationService {
     await scheduleDailyReminder();
   }
 
-  Future<void> requestPermissions() async {
+  Future<bool> requestPermissions() async {
     if (Platform.isAndroid) {
       final androidImplementation =
           _notifications.resolvePlatformSpecificImplementation<
               AndroidFlutterLocalNotificationsPlugin>();
 
       // Request notifications permission (required for Android 13+)
-      await androidImplementation?.requestNotificationsPermission();
+      final granted = await androidImplementation?.requestNotificationsPermission();
 
       // Request exact alarm permission (required for exact scheduling for Android 13+)
+      // Note: This often redirects to settings on Android 14+
       await androidImplementation?.requestExactAlarmsPermission();
+      
+      return granted ?? false;
     } else if (Platform.isIOS) {
-      await _notifications
+      final granted = await _notifications
           .resolvePlatformSpecificImplementation<
               IOSFlutterLocalNotificationsPlugin>()
           ?.requestPermissions(
@@ -54,7 +57,9 @@ class NotificationService {
             badge: true,
             sound: true,
           );
+      return granted ?? false;
     }
+    return false;
   }
 
   Future<void> scheduleDailyReminder() async {
@@ -87,22 +92,57 @@ class NotificationService {
       iOS: DarwinNotificationDetails(),
     );
 
-    // Cancel existing reminders first to avoid duplicates
-    await _notifications.cancel(id: 100);
+    try {
+      // Cancel existing reminders first to avoid duplicates
+      await _notifications.cancel(id: 100);
 
-    // In v21.0.0, everything in zonedSchedule is a named parameter
-    // and uiLocalNotificationDateInterpretation is removed.
-    await _notifications.zonedSchedule(
-      id: 100,
-      title: 'Salah Tracker App',
-      body: 'Don\'t forget to log your prayers for today!',
-      scheduledDate: scheduledDate,
-      notificationDetails: details,
-      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-      matchDateTimeComponents: DateTimeComponents.time,
+      // In v21.0.0, everything in zonedSchedule is a named parameter
+      // and uiLocalNotificationDateInterpretation is removed.
+      await _notifications.zonedSchedule(
+        id: 100,
+        title: 'Salah Tracker App',
+        body: 'Don\'t forget to log your prayers for today!',
+        scheduledDate: scheduledDate,
+        notificationDetails: details,
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+        matchDateTimeComponents: DateTimeComponents.time,
+      );
+
+      debugPrint('Daily reminder scheduled for: $scheduledDate (BD Time)');
+    } catch (e) {
+      debugPrint('Error scheduling exact notification: $e');
+      // Fallback to inexact if exact fails (common on Android 14+ without permission)
+      await _notifications.zonedSchedule(
+        id: 100,
+        title: 'Salah Tracker App',
+        body: 'Don\'t forget to log your prayers for today!',
+        scheduledDate: scheduledDate,
+        notificationDetails: details,
+        androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+        matchDateTimeComponents: DateTimeComponents.time,
+      );
+      debugPrint('Daily reminder scheduled with inexact mode');
+    }
+  }
+
+  Future<void> testNotification() async {
+    const details = NotificationDetails(
+      android: AndroidNotificationDetails(
+        'salah_test_channel',
+        'Test Notifications',
+        channelDescription: 'Used to test if notifications are working',
+        importance: Importance.max,
+        priority: Priority.high,
+      ),
+      iOS: DarwinNotificationDetails(),
     );
 
-    debugPrint('Daily reminder scheduled for: $scheduledDate (BD Time)');
+    await _notifications.show(
+      id: 99,
+      title: 'Test Notification',
+      body: 'If you see this, notifications are working! 🎉',
+      notificationDetails: details,
+    );
   }
 
   Future<void> showReminder(

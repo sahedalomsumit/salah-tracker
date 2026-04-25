@@ -5,6 +5,9 @@ import '../../services/auth_service.dart';
 import '../../data/repositories/prayer_repository.dart';
 import '../../providers/prayer_provider.dart';
 import '../../providers/stats_provider.dart';
+import '../../services/notification_service.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -15,6 +18,15 @@ class LoginScreen extends ConsumerStatefulWidget {
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
   bool _isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Request permissions when the login screen is first shown
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      NotificationService.instance.requestPermissions();
+    });
+  }
 
   Future<void> _handleSignIn() async {
     setState(() => _isLoading = true);
@@ -145,6 +157,19 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           ),
                         ],
                       ),
+              ),
+            ),
+            const SizedBox(height: 24),
+            // Guest Button
+            TextButton(
+              onPressed: () => context.go('/home'),
+              child: Text(
+                'offline_mode'.tr(),
+                style: const TextStyle(
+                  color: AppColors.grey,
+                  fontWeight: FontWeight.w600,
+                  decoration: TextDecoration.underline,
+                ),
               ),
             ),
           ],

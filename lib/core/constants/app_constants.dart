@@ -19,11 +19,13 @@ const List<String> kPrayerNames = [
 
 const List<String> kPrayerArabic = [
   'الفجر',
-  'الظهر',
+  'الظهر', // Or 'الجمعة' on Fridays
   'العصر',
   'المغرب',
   'العشاء',
 ];
+
+const String kJummahArabic = 'الجمعة';
 
 // ── Prayer icons (approximate times) ─────────────────────────────────────────
 const List<IconData> kPrayerIcons = [

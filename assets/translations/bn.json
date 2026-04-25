@@ -7,6 +7,7 @@
 
   "prayer_fajr": "ফজর",
   "prayer_dhuhr": "যোহর",
+  "prayer_jummah": "জুম্মা",
   "prayer_asr": "আসর",
   "prayer_maghrib": "মাগরিব",
   "prayer_isha": "এশা",
@@ -22,6 +23,8 @@
 
   "settings_title": "সেটিংস",
   "settings_app_settings": "অ্যাপ সেটিংস",
+  "settings_notifications": "নোটিফিকেশন",
+  "settings_notifications_subtitle": "দৈনিক রিমাইন্ডার পরীক্ষা করুন",
   "settings_account": "অ্যাকাউন্ট",
   "settings_language": "ভাষা",
   "settings_language_subtitle": "বাংলা",

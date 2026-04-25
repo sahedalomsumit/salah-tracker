@@ -7,6 +7,7 @@
 
   "prayer_fajr": "Fajr",
   "prayer_dhuhr": "Dhuhr",
+  "prayer_jummah": "Jummah",
   "prayer_asr": "Asr",
   "prayer_maghrib": "Maghrib",
   "prayer_isha": "Isha",
@@ -22,6 +23,8 @@
 
   "settings_title": "Settings",
   "settings_app_settings": "App Settings",
+  "settings_notifications": "Notifications",
+  "settings_notifications_subtitle": "Test daily reminder notifications",
   "settings_account": "Account",
   "settings_language": "Language",
   "settings_language_subtitle": "English",

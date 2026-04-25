@@ -20,10 +20,15 @@ final _routerProvider = Provider<GoRouter>((ref) {
   final authStatus = ref.watch(isAuthenticatedProvider);
 
   return GoRouter(
-    initialLocation: '/home',
+    initialLocation: '/login',
     redirect: (context, state) {
       final isLoggingIn = state.matchedLocation == '/login';
-      if (authStatus && isLoggingIn) return '/home';
+      if (authStatus) {
+        if (isLoggingIn) return '/home';
+        return null;
+      }
+      // If not logged in, they must be on /login
+      if (!isLoggingIn) return '/login';
       return null;
     },
     routes: [

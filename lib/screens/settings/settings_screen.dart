@@ -9,6 +9,7 @@ import '../../providers/auth_provider.dart';
 import '../../providers/theme_provider.dart';
 import '../../providers/app_info_provider.dart';
 import '../../services/auth_service.dart';
+import '../../services/notification_service.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -147,6 +148,26 @@ class SettingsScreen extends ConsumerWidget {
             subtitle: themeModeLabel(),
             surfaceColor: surfaceIcon,
             onTap: () => _showThemePicker(context, ref),
+          ),
+          
+          // Notifications Tile
+          _SettingsTile(
+            icon: Icons.notifications_active_outlined,
+            title: 'settings_notifications'.tr(),
+            subtitle: 'settings_notifications_subtitle'.tr(),
+            surfaceColor: surfaceIcon,
+            onTap: () async {
+              await NotificationService.instance.testNotification();
+              if (context.mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Test notification sent!'),
+                    duration: Duration(seconds: 2),
+                    behavior: SnackBarBehavior.floating,
+                  ),
+                );
+              }
+            },
           ),
 
           const SizedBox(height: 40),
