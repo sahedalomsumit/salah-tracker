@@ -86,8 +86,8 @@ class NotificationService {
     const details = NotificationDetails(
       android: AndroidNotificationDetails(
         'salah_daily_reminder',
-        'Daily Reminders',
-        channelDescription: 'Daily reminder to log your prayers at 10 PM',
+        'Daily Reflection',
+        channelDescription: 'Spiritual reminder to log your daily prayers',
         importance: Importance.max,
         priority: Priority.high,
       ),
