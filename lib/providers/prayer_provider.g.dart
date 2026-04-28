@@ -121,7 +121,7 @@ final class DayPrayersProvider
   DayPrayers create() => DayPrayers();
 }
 
-String _$dayPrayersHash() => r'3b6550597a96c752d2c2ec4d6f4cfd0c50c6f03f';
+String _$dayPrayersHash() => r'5085f2c9979df12f6e0ee1c3a83f9b571ab837c3';
 
 abstract class _$DayPrayers extends $AsyncNotifier<List<PrayerRecord>> {
   FutureOr<List<PrayerRecord>> build();
