@@ -69,11 +69,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       body: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [const Color(0xFF0F172A), theme.cardColor],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
+          color: theme.brightness == Brightness.light ? Colors.white : theme.scaffoldBackgroundColor,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -108,7 +104,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               textAlign: TextAlign.center,
               style: theme.textTheme.headlineMedium?.copyWith(
                 fontWeight: FontWeight.w800,
-                color: AppColors.lightText,
                 letterSpacing: 1.2,
               ),
             ),
@@ -119,7 +114,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 'login_build_consistency'.tr(),
                 textAlign: TextAlign.center,
                 style: theme.textTheme.bodyMedium?.copyWith(
-                  color: AppColors.grey,
+                  color: theme.textTheme.bodyMedium?.color?.withValues(alpha: 0.8),
                 ),
               ),
             ),
@@ -132,8 +127,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               child: ElevatedButton(
                 onPressed: _isLoading ? null : _handleSignIn,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.lightText,
-                  foregroundColor: const Color(0xFF0F172A),
+                  backgroundColor: theme.brightness == Brightness.light ? const Color(0xFF0F172A) : AppColors.lightText,
+                  foregroundColor: theme.brightness == Brightness.light ? Colors.white : const Color(0xFF0F172A),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
