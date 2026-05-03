@@ -2,12 +2,30 @@
 
 ![Salah Tracker Hero](assets/images/hero.jpg)
 
+<div align="center">
+
+[![Get it on Google Play](https://img.shields.io/badge/Google_Play-414141?style=for-the-badge&logo=google-play&logoColor=white)](https://play.google.com/store/apps/details?id=com.sahed.salah_tracker)
 [![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)](https://flutter.dev)
 [![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com)
 [![Riverpod](https://img.shields.io/badge/Riverpod-000000?style=for-the-badge&logo=dart&logoColor=0175C2)](https://riverpod.dev)
-[![Ad-Free](https://img.shields.io/badge/Experience-AD--FREE-red?style=for-the-badge)](https://github.com/sahedalomsumit/salah-tracker)
+
+</div>
 
 **Salah Tracker App** is a premium, **AD-FREE** spiritual companion designed to help you track your daily prayers and build a consistent habit through beautiful data visualizations and an elegant, modern interface.
+
+---
+
+## 🌟 Quick Overview (একনজরে ফিচারসমূহ)
+
+### English
+👉 **Track 5 daily prayers**  
+👉 **View daily, weekly, monthly, and yearly statistics**  
+👉 **100% Ad-free**
+
+### বাংলা
+👉 **৫ ওয়াক্ত নামাজ track করুন**  
+👉 **দৈনিক, সাপ্তাহিক, মাসিক এবং বাৎসরিক statistics দেখুন**  
+👉 **১০০% বিজ্ঞাপন মুক্ত**
 
 ---
 
